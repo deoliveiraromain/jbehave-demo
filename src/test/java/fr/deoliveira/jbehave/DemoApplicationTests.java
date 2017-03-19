@@ -10,30 +10,36 @@ import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
-import org.jbehave.core.steps.spring.SpringApplicationContextFactory;
 import org.jbehave.core.steps.spring.SpringStepsFactory;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.TestContextManager;
 
 import java.util.List;
 
-//Spring Runner
-//@RunWith(SpringRunner.class)
-//For JBehave to have all tests separeted
 @RunWith(JUnitReportingRunner.class)
+//For JBehave to have all tests separeted, we used JUnitReportingRunner instead of SpringRunner.
+//But this need a fix in order to applicationContext to be initialized correctly.
 @SpringBootTest(classes = DemoApplication.class)
 public class DemoApplicationTests extends JUnitStories {
 
-    //@Autowired
+    @Autowired
     private ApplicationContext applicationContext;
+
+    private TestContextManager testContextManager;
 
     @Override
     public Configuration configuration() {
+        //Fix for ApplicationContext being init correctly.
+        //AS not working well:  applicationContext = new AnnotationConfigApplicationContext(DemoApplication.class);
+        try {
+            this.testContextManager = new TestContextManager(getClass());
+            this.testContextManager.prepareTestInstance(this);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return new MostUsefulConfiguration()
                 // where to find the stories
                 .useStoryLoader(new LoadFromClasspath())
@@ -41,14 +47,11 @@ public class DemoApplicationTests extends JUnitStories {
                 .useStoryReporterBuilder(new StoryReporterBuilder().withDefaultFormats().withFormats(Format.CONSOLE, Format.TXT));
     }
 
-    // Here we specify the steps classes
     @Override
     public InjectableStepsFactory stepsFactory() {
         // we can specify all classes that having steps...
-        //return new InstanceStepsFactory(configuration(), new RadioSteps());
+        //return new InstanceStepsFactory(configuration(), new DemoStep());
         //Or use jbehave spring integration
-        //----applicationContext = new SpringApplicationContextFactory(DemoApplication.class).createApplicationContext();
-        applicationContext = new AnnotationConfigApplicationContext(DemoApplication.class);
         return new SpringStepsFactory(configuration(), applicationContext);
     }
 

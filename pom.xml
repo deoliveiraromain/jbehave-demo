@@ -43,6 +43,12 @@
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.0.0</version>
+        </dependency>
+
         <!-- JBehave dependencies -->
         <dependency>
             <groupId>org.jbehave</groupId>
