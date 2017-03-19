@@ -1,5 +1,6 @@
 package fr.deoliveira.jbehave;
 
+import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.io.CodeLocations;
@@ -9,29 +10,27 @@ import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
+import org.jbehave.core.steps.spring.SpringApplicationContextFactory;
 import org.jbehave.core.steps.spring.SpringStepsFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
+//Spring Runner
+//@RunWith(SpringRunner.class)
 //For JBehave to have all tests separeted
-//JUnitReportingRunner
-@RunWith(SpringRunner.class)
+@RunWith(JUnitReportingRunner.class)
 @SpringBootTest(classes = DemoApplication.class)
 public class DemoApplicationTests extends JUnitStories {
 
-
-    @Autowired
+    //@Autowired
     private ApplicationContext applicationContext;
-
-    @Autowired
-    private DemoStep step;
-
 
     @Override
     public Configuration configuration() {
@@ -45,11 +44,11 @@ public class DemoApplicationTests extends JUnitStories {
     // Here we specify the steps classes
     @Override
     public InjectableStepsFactory stepsFactory() {
-        // varargs, can have more that one steps classes
         // we can specify all classes that having steps...
         //return new InstanceStepsFactory(configuration(), new RadioSteps());
         //Or use jbehave spring integration
         //----applicationContext = new SpringApplicationContextFactory(DemoApplication.class).createApplicationContext();
+        applicationContext = new AnnotationConfigApplicationContext(DemoApplication.class);
         return new SpringStepsFactory(configuration(), applicationContext);
     }
 
@@ -57,4 +56,5 @@ public class DemoApplicationTests extends JUnitStories {
     protected List<String> storyPaths() {
         return new StoryFinder().findPaths(CodeLocations.codeLocationFromClass(this.getClass()), "**/*.story", "**/excluded*.story");
     }
+
 }
