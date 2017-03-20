@@ -8,6 +8,10 @@ public class Client {
 
     @Getter
     @Setter
+    private int id;
+
+    @Getter
+    @Setter
     private String firstName;
 
     @Getter
