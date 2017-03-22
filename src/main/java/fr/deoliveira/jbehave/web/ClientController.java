@@ -23,8 +23,8 @@ public class ClientController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/all")
     public String getAll(Model model) {
-        log.info("TEST CLIENTS");
-        model.addAttribute("client", clientService.getAllClients().get(0));
+        log.info("getting all clients");
+        model.addAttribute("clients", clientService.getAllClients());
         return "clients";
     }
 
