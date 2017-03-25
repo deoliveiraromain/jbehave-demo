@@ -23,40 +23,15 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <jbehave.version>4.1</jbehave.version>
+        <!--<junit.version>4.11</junit.version>-->
     </properties>
 
     <dependencies>
         <!-- Spring boot dependencies-->
-
-        <!-- Spring MVC -->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-web</artifactId>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-        <!-- Tomcat embedded container-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
-        <!--<scope>provided</scope>-->
-        <!--</dependency>-->
-
-        <!-- JSTL for JSP -->
-        <!--<dependency>-->
-        <!--<groupId>javax.servlet</groupId>-->
-        <!--<artifactId>jstl</artifactId>-->
-        <!--</dependency>-->
-
-        <!-- Need this to compile JSP -->
-        <!--<dependency>-->
-        <!--<groupId>org.apache.tomcat.embed</groupId>-->
-        <!--<artifactId>tomcat-embed-jasper</artifactId>-->
-        <!--<scope>provided</scope>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -66,21 +41,17 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
         <!-- 3RD party dependencies -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.0.0</version>
         </dependency>
-
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.14</version>
         </dependency>
-
 
         <!-- JBehave dependencies -->
         <dependency>
@@ -100,6 +71,14 @@
             <groupId>de.codecentric</groupId>
             <artifactId>jbehave-junit-runner</artifactId>
             <version>1.2.0</version>
+        </dependency>
+
+        <!-- Selenium api -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.3.1</version>
+            <scope>test</scope>
         </dependency>
 
 

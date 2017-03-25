@@ -9,4 +9,8 @@ public interface ClientService {
 
     List<Client> getAllClients();
 
+    void deleteAllClients();
+
+    void addClient(Client client);
+
 }

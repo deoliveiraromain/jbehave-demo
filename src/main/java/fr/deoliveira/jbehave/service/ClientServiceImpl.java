@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,7 +16,11 @@ import java.util.List;
 @Slf4j
 public class ClientServiceImpl implements ClientService {
 
-    private static final String GET_ALL_CLIENT = "SELECT * FROM CLIENT";
+    private static final String GET_ALL_CLIENTS = "SELECT * FROM CLIENT";
+
+    private static final String DELETE_ALL_CLIENTS = "DELETE FROM CLIENT";
+
+    private static final String INSERT_CLIENT = "INSERT INTO CLIENT (last_name,first_name,age) VALUES (?,?,?)";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -24,9 +30,25 @@ public class ClientServiceImpl implements ClientService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<Client> getAllClients() {
+        log.debug("Service layer, get all client");
+        return jdbcTemplate.query(GET_ALL_CLIENTS, new ClientMapper());
+    }
 
     @Override
-    public List<Client> getAllClients() {
-        return jdbcTemplate.query(GET_ALL_CLIENT,new ClientMapper());
+    @Transactional
+    public void deleteAllClients() {
+        log.debug("Service layer, deleting  all clients");
+        this.jdbcTemplate.update(DELETE_ALL_CLIENTS);
+    }
+
+    @Override
+    @Transactional
+    public void addClient(Client client) {
+        log.debug("Service layer, adding client {}", client);
+        this.jdbcTemplate.update(INSERT_CLIENT, client.getLastName(), client.getFirstName(), client.getAge());
+
     }
 }

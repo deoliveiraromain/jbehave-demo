@@ -10,16 +10,11 @@ public class ClientMapper implements RowMapper<Client> {
 
     private static final String ID = "id";
     private static final String FIRSTNAME = "first_name";
-    private static final String LASTNAME  = "last_name";
+    private static final String LASTNAME = "last_name";
     private static final String AGE = "age";
 
     @Override
     public Client mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Client client = new Client();
-        client.setAge(rs.getInt(AGE));
-        client.setFirstName(rs.getString(FIRSTNAME));
-        client.setLastName(rs.getString(LASTNAME));
-        client.setId(rs.getInt(ID));
-        return client;
+        return new Client(rs.getInt(ID), rs.getString(LASTNAME), rs.getString(FIRSTNAME), rs.getInt(AGE));
     }
 }

@@ -22,4 +22,16 @@ public class Client {
     @Setter
     private int age;
 
+    public Client(int id, String lastName, String firstName, int age) {
+        this.id = id;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.age = age;
+    }
+
+    public Client(String lastName, String firstName, int age) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.age = age;
+    }
 }

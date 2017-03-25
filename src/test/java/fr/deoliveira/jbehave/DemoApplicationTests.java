@@ -1,12 +1,14 @@
 package fr.deoliveira.jbehave;
 
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
+import org.jbehave.core.Embeddable;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.io.CodeLocations;
 import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
+import org.jbehave.core.reporters.CrossReference;
 import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
@@ -30,6 +32,20 @@ public class DemoApplicationTests extends JUnitStories {
 
     private TestContextManager testContextManager;
 
+    private final CrossReference xref = new CrossReference();
+
+    public DemoApplicationTests() {
+//        configuredEmbedder()//
+//                .embedderControls()//
+//                .doGenerateViewAfterStories(true)//
+//                .doIgnoreFailureInStories(false)//
+//                .doIgnoreFailureInView(false)//
+//                .doVerboseFailures(false)//
+//                .useThreads(1)//
+//                .useStoryTimeoutInSecs(600);
+    }
+
+
     @Override
     public Configuration configuration() {
         //Fix for ApplicationContext being init correctly.
@@ -44,7 +60,8 @@ public class DemoApplicationTests extends JUnitStories {
                 // where to find the stories
                 .useStoryLoader(new LoadFromClasspath())
                 // CONSOLE and TXT reporting
-                .useStoryReporterBuilder(new StoryReporterBuilder().withDefaultFormats().withFormats(Format.CONSOLE, Format.TXT));
+                .useStoryReporterBuilder(new StoryReporterBuilder().withDefaultFormats().withFormats(Format.CONSOLE, Format.HTML))
+                .useStepMonitor(xref.getStepMonitor());
     }
 
     @Override
@@ -57,7 +74,7 @@ public class DemoApplicationTests extends JUnitStories {
 
     @Override
     protected List<String> storyPaths() {
-        return new StoryFinder().findPaths(CodeLocations.codeLocationFromClass(this.getClass()), "**/*.story", "**/excluded*.story");
+        return new StoryFinder().findPaths(CodeLocations.codeLocationFromClass(this.getClass()), "**/*.story", "");
     }
 
 }
