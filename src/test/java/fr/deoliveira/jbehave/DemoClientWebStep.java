@@ -1,15 +1,19 @@
 package fr.deoliveira.jbehave;
 
+import com.google.common.base.Function;
 import fr.deoliveira.jbehave.exception.DemoException;
 import fr.deoliveira.jbehave.model.Client;
 import fr.deoliveira.jbehave.settings.DemoProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.jbehave.core.annotations.*;
 import org.jbehave.core.model.ExamplesTable;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,7 +43,7 @@ public class DemoClientWebStep {
         } catch (MalformedURLException e) {
             throw new RuntimeException("Error during launching Selenium.");
         }
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     public void afterStory() {
@@ -71,8 +75,9 @@ public class DemoClientWebStep {
         }
     }
 
-    @When("Remplir le formulaire avec : \n $client")
-    public void fillForm(ExamplesTable clientTable) {
+    @When("Soumettre le formulaire avec : \n $client")
+    public void fillForm(ExamplesTable clientTable) throws InterruptedException {
+        waitUntilFormPresent();
         List<Map<String, String>> clientsRows = clientTable.getRows();
         if (clientsRows.isEmpty() || clientsRows.size() != 1) {
             throw new DemoException("On n'ajoute qu'un seul client à la fois");
@@ -85,8 +90,33 @@ public class DemoClientWebStep {
     }
 
     @Then("Le tableau de résultats contient $nb lignes")
-    @Pending
     public void checkTable(int nb) {
-        //Pending
+        waitUntilTablePresent();
+        int rowCount=driver.findElements(By.xpath("//table[@id='clients-table']/tbody/tr")).size();
+        Assert.assertEquals(nb,rowCount);
+    }
+
+
+    private void waitUntilTablePresent(){
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(presenceOfElementLocated(By.id("clients-table")));
+    }
+
+    private void waitUntilFormPresent(){
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(presenceOfElementLocated(By.id("clients-container")));
+        wait.until(presenceOfElementLocated(By.id("lastName")));
+        wait.until(presenceOfElementLocated(By.id("firstName")));
+        wait.until(presenceOfElementLocated(By.id("age")));
+        wait.until(presenceOfElementLocated(By.id("submitAdd")));
+    }
+
+    private static Function<WebDriver,WebElement> presenceOfElementLocated(final By locator) {
+        return new Function<WebDriver, WebElement>() {
+            @Override
+            public WebElement apply(WebDriver driver) {
+                return driver.findElement(locator);
+            }
+        };
     }
 }

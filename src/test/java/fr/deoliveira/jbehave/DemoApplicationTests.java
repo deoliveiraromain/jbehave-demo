@@ -32,23 +32,13 @@ public class DemoApplicationTests extends JUnitStories {
 
     private TestContextManager testContextManager;
 
-    private final CrossReference xref = new CrossReference();
-
     public DemoApplicationTests() {
-//        configuredEmbedder()//
-//                .embedderControls()//
-//                .doGenerateViewAfterStories(true)//
-//                .doIgnoreFailureInStories(false)//
-//                .doIgnoreFailureInView(false)//
-//                .doVerboseFailures(false)//
-//                .useThreads(1)//
-//                .useStoryTimeoutInSecs(600);
     }
 
 
     @Override
     public Configuration configuration() {
-        //Fix for ApplicationContext being init correctly.
+        //Fix for ApplicationContext being init correctly with spring boot
         //AS not working well:  applicationContext = new AnnotationConfigApplicationContext(DemoApplication.class);
         try {
             this.testContextManager = new TestContextManager(getClass());
@@ -60,8 +50,7 @@ public class DemoApplicationTests extends JUnitStories {
                 // where to find the stories
                 .useStoryLoader(new LoadFromClasspath())
                 // CONSOLE and TXT reporting
-                .useStoryReporterBuilder(new StoryReporterBuilder().withDefaultFormats().withFormats(Format.CONSOLE, Format.HTML))
-                .useStepMonitor(xref.getStepMonitor());
+                .useStoryReporterBuilder(new StoryReporterBuilder().withDefaultFormats().withFormats(Format.CONSOLE, Format.HTML));
     }
 
     @Override

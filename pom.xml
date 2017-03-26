@@ -77,7 +77,8 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>3.3.1</version>
+            <!-- 3.3.1 no more WebDriverWait ?-->
+            <version>2.46.0</version>
             <scope>test</scope>
         </dependency>
 
