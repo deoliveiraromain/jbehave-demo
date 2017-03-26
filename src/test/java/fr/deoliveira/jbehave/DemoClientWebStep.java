@@ -98,7 +98,7 @@ public class DemoClientWebStep {
 
     private void waitUntilTablePresent(){
         WebDriverWait wait = new WebDriverWait(driver, 5);
-        wait.until(presenceOfElementLocated(By.xpath("//table[@id='clients-table']")));
+        wait.until(presenceOfElementLocated(By.xpath("//table[@id='clients-table']/tbody/tr")));
     }
 
     private void waitUntilFormPresent(){
