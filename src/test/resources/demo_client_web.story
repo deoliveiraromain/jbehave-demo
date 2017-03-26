@@ -37,7 +37,7 @@ When Soumettre le formulaire avec :
 When Soumettre le formulaire avec :
 |NOM|PRENOM|AGE|
 |Bourreau|Robert|50|
-Then Le tableau de résultats contient 13 lignes
+Then Le tableau de résultats contient 10 lignes
 Given Quitter l'application
 
 
