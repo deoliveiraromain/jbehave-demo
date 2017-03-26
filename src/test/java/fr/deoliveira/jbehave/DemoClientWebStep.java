@@ -96,7 +96,6 @@ public class DemoClientWebStep {
         Assert.assertEquals(nb,rowCount);
     }
 
-
     private void waitUntilTablePresent(){
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(presenceOfElementLocated(By.id("clients-table")));

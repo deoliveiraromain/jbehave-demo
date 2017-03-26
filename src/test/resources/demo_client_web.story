@@ -12,40 +12,31 @@ When Soumettre le formulaire avec :
 |Dupont|Robert|45|
 When Soumettre le formulaire avec :
 |NOM|PRENOM|AGE|
-|Dupont|Robert2|45|
+|Dupont|Lea|15|
 When Soumettre le formulaire avec :
 |NOM|PRENOM|AGE|
-|Dupont|Robert3|45|
+|Dupont|Marie|37|
 When Soumettre le formulaire avec :
 |NOM|PRENOM|AGE|
-|Dupont|Robert4|45|
+|Martin|Jean-Pierre|24|
 When Soumettre le formulaire avec :
 |NOM|PRENOM|AGE|
-|Dupont|Robert5|45|
+|Martin|Joseph|52|
 When Soumettre le formulaire avec :
 |NOM|PRENOM|AGE|
-|Dupont|Robert6|45|
+|De Oliveira|Romain|24|
 When Soumettre le formulaire avec :
 |NOM|PRENOM|AGE|
-|Dupont|Robert7|45|
+|Leclerc|Marise|109|
 When Soumettre le formulaire avec :
 |NOM|PRENOM|AGE|
-|Dupont|Robert8|45|
+|Smith|Adam|294|
 When Soumettre le formulaire avec :
 |NOM|PRENOM|AGE|
-|Dupont|Robert9|45|
+|Trump|Donald|2|
 When Soumettre le formulaire avec :
 |NOM|PRENOM|AGE|
-|Dupont|Robert10|45|
-When Soumettre le formulaire avec :
-|NOM|PRENOM|AGE|
-|Dupont|Robert11|45|
-When Soumettre le formulaire avec :
-|NOM|PRENOM|AGE|
-|Dupont|Robert12|45|
-When Soumettre le formulaire avec :
-|NOM|PRENOM|AGE|
-|Dupont|Robert13|45|
+|Bourreau|Robert|50|
 Then Le tableau de résultats contient 13 lignes
 Given Quitter l'application
 
