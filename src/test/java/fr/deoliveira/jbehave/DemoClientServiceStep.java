@@ -44,4 +44,9 @@ public class DemoClientServiceStep {
     public void checkNumberOfClients(int nb) {
         Assert.assertEquals(nb, this.clientService.getAllClients().size());
     }
+
+    @Then("Le résultat de la recherche de $lastName renvoie $nb résultat")
+    public void checkSearch(String lastName, int nb){
+        Assert.assertEquals(nb,this.clientService.searchByLastName(lastName).size());
+    }
 }

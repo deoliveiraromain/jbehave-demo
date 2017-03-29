@@ -13,4 +13,6 @@ public interface ClientService {
 
     void addClient(Client client);
 
+    List<Client> searchByLastName(String lastName);
+
 }

@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ public class ClientServiceImpl implements ClientService {
     private static final String DELETE_ALL_CLIENTS = "DELETE FROM CLIENT";
 
     private static final String INSERT_CLIENT = "INSERT INTO CLIENT (last_name,first_name,age) VALUES (?,?,?)";
+
+    private static final String SEARCH_CLIENT = "SELECT * FROM CLIENT WHERE last_name='%s'";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -50,5 +53,10 @@ public class ClientServiceImpl implements ClientService {
         log.debug("Service layer, adding client {}", client);
         this.jdbcTemplate.update(INSERT_CLIENT, client.getLastName(), client.getFirstName(), client.getAge());
 
+    }
+
+    @Override
+    public List<Client> searchByLastName(String lastName) {
+        return this.jdbcTemplate.query(String.format(SEARCH_CLIENT, lastName), new ClientMapper());
     }
 }

@@ -10,3 +10,11 @@ When Ajouter les clients :
 |NOM|PRENOM|AGE|
 |Dupont|Robert|45|
 Then Le nombre de clients dans la base est 1
+
+
+Scenario: Rechercher un client par son nom
+Given La base de données est vidée
+When Ajouter les clients :
+|NOM|PRENOM|AGE|
+|Dupont|Léa|45|
+Then Le résultat de la recherche de Dupont renvoie 1 résultat
